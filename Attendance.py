@@ -1,6 +1,5 @@
 import cv2
 import pickle
-<<<<<<< HEAD
 import xlsxwriter
 from datetime import datetime
 
@@ -13,7 +12,6 @@ col = 0
 
 =======
 
->>>>>>> parent of 3313453 (Update Attendance.py)
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("trainner.yml")
