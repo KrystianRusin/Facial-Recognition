@@ -31,6 +31,8 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
             id_ = label_Dic[label]
           
             pillow_image = Image.open(path).convert("L")
+            size = (550, 550)
+            final = pillow_image.resize(size, Image.ANTIALIAS)
             image_array = np.array(pillow_image, "uint8")
             faces = faceCascade.detectMultiScale(
                 image_array,
