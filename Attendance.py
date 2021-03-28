@@ -1,4 +1,5 @@
 import cv2
+<<<<<<< HEAD
 import xlsxwriter
 from datetime import datetime
 
@@ -9,6 +10,9 @@ worksheet = worksheet.add_worksheet()
 row = 0
 col = 0
 
+=======
+
+>>>>>>> parent of 3313453 (Update Attendance.py)
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 
 video_capture = cv2.VideoCapture(0)
