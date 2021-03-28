@@ -8,6 +8,7 @@ DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(DIR, "Images")
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
+recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 currId = 0
 label_Dic = {}
@@ -20,7 +21,7 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
         if file.endswith("png") or file.endswith("jpg"):
             path = os.path.join(root_dir, file)
             label = os.path.basename(os.path.dirname(path)).lower()
-            print(label, path)
+           
             if label in label_Dic:
                 pass
             else:
@@ -28,7 +29,7 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
                 currId += 1
 
             id_ = label_Dic[label]
-            print(label_Dic)
+          
             pillow_image = Image.open(path).convert("L")
             image_array = np.array(pillow_image, "uint8")
             faces = faceCascade.detectMultiScale(
@@ -45,3 +46,6 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
 
 with open('labels.pickle', 'wb') as f:
     pickle.dump(label_Dic, f)
+
+recognizer.train(x_train, np.array(y_label))
+recognizer.save("trainner.yml")    
