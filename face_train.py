@@ -8,7 +8,6 @@ DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(DIR, "Images")
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
-r
 
 currId = 0
 label_Dic = {}
