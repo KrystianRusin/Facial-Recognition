@@ -1,7 +1,9 @@
 import cv2
 import pickle
+from pydub import AudioSegment
+from pydub.playback import play
 
-faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_eye.xml')
+faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_eye_tree_eyeglasses.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("trainner.yml")
 
@@ -24,13 +26,17 @@ while True:
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
+    if len(eyes) == 0:
+        song = AudioSegment.from_mp3("myself.mp3")
+        play(song)
+        continue
 
     for (x, y, w, h) in eyes:
         roi_gray = grayScale[y:y+h, x:x+w]
 
         id_, confidendence = recognizer.predict(roi_gray)
 
-        if confidendence>=45:
+        if confidendence>=0:
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
             color =  (255,255,255)
@@ -38,6 +44,7 @@ while True:
             cv2.putText(camera, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
 
         cv2.rectangle(camera, (x, y), (x+w, y+h), (153,50,204), 2)
+    
 
     cv2.imshow('Video', camera)
 
