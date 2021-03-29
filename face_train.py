@@ -21,7 +21,7 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
         if file.endswith("png") or file.endswith("jpg"):
             path = os.path.join(root_dir, file)
             label = os.path.basename(os.path.dirname(path)).lower()
-           
+
             if label in label_Dic:
                 pass
             else:
@@ -29,7 +29,7 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
                 currId += 1
 
             id_ = label_Dic[label]
-          
+
             pillow_image = Image.open(path).convert("L")
             size = (550, 550)
             final = pillow_image.resize(size, Image.ANTIALIAS)
@@ -50,4 +50,4 @@ with open('labels.pickle', 'wb') as f:
     pickle.dump(label_Dic, f)
 
 recognizer.train(x_train, np.array(y_label))
-recognizer.save("trainner.yml")    
+recognizer.save("trainner.yml")

@@ -1,16 +1,6 @@
 import cv2
 import pickle
-import xlsxwriter
-from datetime import datetime
 
-
-#Create a workbook, add sheet 
-workbook = xlsxwriter.Workbook('Attendance01.xlsx')
-worksheet = worksheet.add_worksheet()
-row = 0
-col = 0
-
-=======
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
