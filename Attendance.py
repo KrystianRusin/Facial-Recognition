@@ -1,16 +1,15 @@
 import cv2
 import pickle
-import xlsxwriter
+# import xlsxwriter
 from datetime import datetime
 
 
 #Create a workbook, add sheet 
-workbook = xlsxwriter.Workbook('Attendance01.xlsx')
-worksheet = worksheet.add_worksheet()
-row = 0
-col = 0
+# workbook = xlsxwriter.Workbook('Attendance01.xlsx')
+# worksheet = worksheet.add_worksheet()
+# row = 0
+# col = 0
 
-=======
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -44,7 +43,7 @@ while True:
         if confidendence>=45:
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
-            color =  (0,0,0)
+            color =  (255,255,255)
             stroke = 2
             cv2.putText(camera, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
 
