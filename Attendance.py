@@ -1,7 +1,6 @@
 import cv2
 import pickle
 
-
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("trainner.yml")
@@ -34,7 +33,7 @@ while True:
         if confidendence>=45:
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
-            color =  (0,0,0)
+            color =  (255,255,255)
             stroke = 2
             cv2.putText(camera, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
 
