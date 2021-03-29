@@ -8,8 +8,11 @@ from datetime import datetime
 wb = Workbook()
 row = 0
 col = 0
+nameList = []
+f = open('Attendance.csv', "w+")
+f.writelines('Name , Date')
 
-sheet1 = wb.add_sheet('Sheet 1')
+# sheet1 = wb.add_sheet('Sheet 1')
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -23,17 +26,17 @@ with open('labels.pickle', 'rb') as f:
 video_capture = cv2.VideoCapture(0)
 
 def markAttendance(name):
-    with open('Attendance.csv', 'r+') as f:
-        myDatalist = f.readlines()
+        with open('Attendance.csv', 'r+') as f:
+            myDatalist = f.readlines()
 
-        nameList = []
-        for line in myDatalist:
-            entry = line.split(',')
-            nameList.append(entry[0])
-            if name not in nameList:
-                now = datetime.now()
-                dtString = now.strftime('%H:%M:%S')
-                f.writelines(f'\n{name},{dtString}')
+            
+            # print(nameList)
+            # for line in myDatalist:
+                # entry = line.split(',')
+                # nameList.append(entry[0])
+            now = datetime.now()
+            dtString = now.strftime('%H:%M:%S')
+            f.writelines(f'\n{name},{dtString}')
 
 while True:
     returnCode, camera = video_capture.read()
@@ -53,12 +56,14 @@ while True:
 
         id_, confidendence = recognizer.predict(roi_gray)
 
-        if confidendence>=45:
+        if confidendence<=85:
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
             color =  (255,255,255)
             stroke = 2
-            markAttendance(name)
+            if name not in nameList:
+                nameList.append(name)
+                markAttendance(name)
             cv2.putText(camera, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
 
 
@@ -73,6 +78,8 @@ while True:
         # wb.save('attendance.xls')
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        f = open('Attendance.csv', "w+")
+        f.close()
         break
 
 
