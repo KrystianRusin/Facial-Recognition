@@ -10,6 +10,7 @@ col = 0
 nameList = []
 f = open('Attendance.csv', "w+")
 f.writelines('Name , Date')
+f.close()
 
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
@@ -28,6 +29,7 @@ def markAttendance(name):
             now = datetime.now()
             dtString = now.strftime('%H:%M:%S')
             f.writelines(f'\n{name},{dtString}')
+            f.close()
 
 while True:
     returnCode, camera = video_capture.read()
