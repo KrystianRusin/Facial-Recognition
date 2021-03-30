@@ -3,6 +3,7 @@ import pickle
 import xlwt
 import csv
 from datetime import datetime
+import pandas as pd
 
 row = 0
 col = 0
@@ -24,7 +25,6 @@ video_capture = cv2.VideoCapture(0)
 
 def markAttendance(name):
      with open('Attendance.csv', 'r+') as f:
-        myDatalist = f.readlines()
         now = datetime.now()
         dtString = now.strftime('%H:%M:%S')
         f.writelines(f'\n{name},{dtString}')
@@ -64,8 +64,10 @@ while True:
 
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        f = open('Attendance.csv', "w+")
-        f.close()
+        # Read csv file
+        df_new = pd.read_csv('Attendance.csv')
+        
+        df_new.to_excel('Attendance.xlsx', sheet_name='Class1', index = False)
         break
 
 
