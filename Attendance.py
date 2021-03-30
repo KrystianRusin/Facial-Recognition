@@ -3,13 +3,17 @@ import pickle
 import xlwt
 import csv
 from datetime import datetime
+import pandas as pd
+import numpy as np
 
+# wb = Workbook()
 row = 0
 col = 0
 nameList = []
 f = open('Attendance.csv', "w+")
-f.writelines('Name , Date')
-
+# f.writelines('Name , Date')
+f.writelines(f'\n Name, Date')
+f.close()
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -23,11 +27,11 @@ with open('labels.pickle', 'rb') as f:
 video_capture = cv2.VideoCapture(0)
 
 def markAttendance(name):
-     with open('Attendance.csv', 'r+') as f:
-        myDatalist = f.readlines()
-        now = datetime.now()
-        dtString = now.strftime('%H:%M:%S')
-        f.writelines(f'\n{name},{dtString}')
+        with open('Attendance.csv', 'r+') as f:
+            now = datetime.now()
+            dtString = now.strftime('%H:%M:%S')
+            f.writelines(f'\n{name},{dtString}')
+            f.close()
 
 while True:
     returnCode, camera = video_capture.read()
@@ -64,8 +68,10 @@ while True:
 
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        f = open('Attendance.csv', "w+")
-        f.close()
+        # Read csv file
+        df_new = pd.read_csv('Attendance.csv')
+        
+        df_new.to_excel('Attendance.xlsx', sheet_name='Class1', index = False)
         break
 
 
