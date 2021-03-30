@@ -14,7 +14,7 @@ f.writelines('Name , Date')
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("trainner.yml")
+recognizer.read("trainer.yml")
 
 labels = {}
 with open('labels.pickle', 'rb') as f:
@@ -47,7 +47,7 @@ while True:
 
         id_, confidendence = recognizer.predict(roi_gray)
 
-        if confidendence<=85:
+        if confidendence<=65:
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
             color =  (255,255,255)
