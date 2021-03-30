@@ -56,6 +56,12 @@ while True:
                 nameList.append(name)
                 markAttendance(name)
             cv2.putText(camera, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
+        elif confidendence>85:
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            name = labels[id_]
+            color =  (255,255,255)
+            stroke = 2
+            cv2.putText(camera, "Not Recognized", (x,y), font, 1, color, stroke, cv2.LINE_AA)
 
 
         cv2.rectangle(camera, (x, y), (x+w, y+h), (153,50,204), 2)
