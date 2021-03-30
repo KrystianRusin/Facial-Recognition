@@ -15,23 +15,24 @@ label_Dic = {}
 x_train = []
 y_label = []
 
-# find images in a file and then convert images into number for training recognizer
+# Find images in a file and then encode images for training recognizer
 for root_dir, dirs, files in os.walk(IMAGE_DIR):
     for file in files:
+        # Find paths to images 
         if file.endswith("png") or file.endswith("jpg"):
-            path = os.path.join(root_dir, file)
-            label = os.path.basename(os.path.dirname(path)).lower()
-
-            if label in label_Dic:
+            imagePath = os.path.join(root_dir, file)
+            imageLabel = os.path.basename(os.path.dirname(imagePath))
+           #If image has not been found yet then add to label dictionary
+            if imageLabel in label_Dic:
                 pass
             else:
-                label_Dic[label] = currId
+                label_Dic[imageLabel] = currId
                 currId += 1
 
-            id_ = label_Dic[label]
-
-            pillow_image = Image.open(path).convert("L")
-            size = (550, 550)
+            # Encode images for recognizer to train on
+            id_ = label_Dic[imageLabel]
+            pillow_image = Image.open(imagePath).convert("L")
+            size = (550, 500)
             final = pillow_image.resize(size, Image.ANTIALIAS)
             image_array = np.array(pillow_image, "uint8")
             faces = faceCascade.detectMultiScale(
@@ -46,8 +47,10 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
                 x_train.append(roi)
                 y_label.append(id_)
 
+# Export labels dictionary to file to be used in Attendance.py
 with open('labels.pickle', 'wb') as f:
     pickle.dump(label_Dic, f)
 
+#Train recognizer and save learned information in yml file
 recognizer.train(x_train, np.array(y_label))
-recognizer.save("trainner.yml")
+recognizer.save("trainer.yml")    
