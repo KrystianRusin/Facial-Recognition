@@ -32,8 +32,8 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
             # Encode images for recognizer to train on
             id_ = label_Dic[imageLabel]
             pillow_image = Image.open(imagePath).convert("L")
-            size = (550, 500)
-            final = pillow_image.resize(size, Image.ANTIALIAS)
+            #size = (550, 500)
+            #final = pillow_image.resize(size, Image.ANTIALIAS)
             image_array = np.array(pillow_image, "uint8")
             faces = faceCascade.detectMultiScale(
                 image_array,
