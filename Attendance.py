@@ -66,8 +66,10 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         # Read csv file
         df_new = pd.read_csv('Attendance.csv')
-        
-        df_new.to_excel('Attendance.xlsx', sheet_name='Class1', index = False)
+        now = datetime.now() 
+        date = now.strftime("%b%dth")
+        hour = now.strftime("%I%p")
+        df_new.to_excel('Attendance_' + date + '_' + hour+ '.xlsx', sheet_name= 'hour-' + hour , index = False)
         break
 
 
