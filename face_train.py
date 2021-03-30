@@ -16,6 +16,7 @@ x_train = []
 y_label = []
 
 # Find images in a file and then encode images for training recognizer
+print("Finding Images in Dataset...")
 for root_dir, dirs, files in os.walk(IMAGE_DIR):
     for file in files:
         # Find paths to images 
@@ -51,11 +52,14 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
                 roi = image_array[y:y+h, x:x+w]
                 x_train.append(roi)
                 y_label.append(id_)
-
+  
+print("Images Found")
 # Export labels dictionary to file to be used in Attendance.py
 with open('labels.pickle', 'wb') as f:
     pickle.dump(label_Dic, f)
 
 #Train recognizer and save learned information in yml file
+print("Training Facial Recognition...")
 recognizer.train(x_train, np.array(y_label))
 recognizer.save("trainer.yml")    
+print("Training Complete")  
