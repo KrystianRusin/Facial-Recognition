@@ -14,7 +14,7 @@ f.writelines('Name , Date')
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("trainner.yml")
+recognizer.read("trainer.yml")
 
 labels = {}
 with open('labels.pickle', 'rb') as f:
