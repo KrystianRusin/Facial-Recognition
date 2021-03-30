@@ -24,7 +24,7 @@ with open('labels.pickle', 'rb') as f:
 video_capture = cv2.VideoCapture(0)
 
 def markAttendance(name):
-     with open('Attendance.csv', 'r+') as f:
+     with open('Attendance.csv', 'a') as f:
         now = datetime.now()
         dtString = now.strftime('%H:%M:%S')
         f.writelines(f'\n{name},{dtString}')
