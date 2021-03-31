@@ -12,8 +12,8 @@ recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 currId = 0
 label_Dic = {}
-x_train = []
-y_label = []
+train = []
+label = []
 
 # Find images in a file and then encode images for training recognizer
 print("Finding Images in Dataset...")
@@ -33,8 +33,6 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
             # Encode images for recognizer to train on
             id_ = label_Dic[imageLabel]
             pillow_image = Image.open(imagePath).convert("L")
-            #size = (550, 500)
-            #final = pillow_image.resize(size, Image.ANTIALIAS)
             image_array = np.array(pillow_image, "uint8")
             faces = faceCascade.detectMultiScale(
                 image_array,
@@ -45,16 +43,16 @@ for root_dir, dirs, files in os.walk(IMAGE_DIR):
             )
             for (x, y, w, h) in faces:
                 roi = image_array[y:y+h, x:x+w]
-                x_train.append(roi)
-                y_label.append(id_)
-  
-print("Images Found")
+                train.append(roi)
+                label.append(id_)
+print("Images Found")                
+
 # Export labels dictionary to file to be used in Attendance.py
 with open('labels.pickle', 'wb') as f:
     pickle.dump(label_Dic, f)
 
 #Train recognizer and save learned information in yml file
 print("Training Facial Recognition...")
-recognizer.train(x_train, np.array(y_label))
-recognizer.save("trainer.yml")    
-print("Training Complete")  
+recognizer.train(train, np.array(label))
+recognizer.save("trainer.yml")
+print("Training Complete")    
