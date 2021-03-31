@@ -5,7 +5,7 @@ from pydub.playback import play
 
 faceCascade = cv2.CascadeClassifier('Cascades/data/haarcascade_eye_tree_eyeglasses.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("trainner.yml")
+recognizer.read("trainer.yml")
 
 labels = {}
 with open('labels.pickle', 'rb') as f:
@@ -26,11 +26,8 @@ while True:
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
-    if len(eyes) == 0:
-        song = AudioSegment.from_mp3("myself.mp3")
-        play(song)
-        continue
-
+    
+   
     for (x, y, w, h) in eyes:
         roi_gray = grayScale[y:y+h, x:x+w]
 
